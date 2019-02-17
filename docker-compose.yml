@@ -1,0 +1,113 @@
+version: '3'
+
+networks:
+  benchmark: {}
+
+services:
+
+  postgres:
+    networks:
+    - benchmark
+    image: postgres:11-alpine
+
+  cruby_unicorn_sinatra:
+    depends_on:
+    - postgres
+    networks:
+    - benchmark
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/postgres
+    build:
+      args:
+        SERVER: unicorn
+        LIBRARY: sinatra
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8001:8080"
+    command: unicorn -p 8080
+
+  cruby_unicorn_grape:
+    depends_on:
+    - postgres
+    networks:
+    - benchmark
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/postgres
+    build:
+      args:
+        SERVER: unicorn
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8002:8080"
+    command: unicorn -p 8080
+
+  cruby_puma_sinatra:
+    depends_on:
+    - postgres
+    networks:
+    - benchmark
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/postgres
+    build:
+      args:
+        SERVER: puma
+        LIBRARY: sinatra
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8003:8080"
+    command: puma -p 8080
+
+  cruby_puma_grape:
+    depends_on:
+    - postgres
+    networks:
+    - benchmark
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/postgres
+    build:
+      args:
+        SERVER: puma
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8004:8080"
+    command: puma -p 8080
+
+  jruby_puma_grape:
+    depends_on:
+    - postgres
+    networks:
+    - benchmark
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/postgres
+    build:
+      args:
+        SERVER: puma
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.jruby
+    ports:
+    - "8005:8080"
+    command: puma -p 8080
+
+  jruby_puma_sinatra:
+    depends_on:
+    - postgres
+    networks:
+    - benchmark
+    environment:
+      DATABASE_URL: postgres://postgres@postgres/postgres
+    build:
+      args:
+        SERVER: puma
+        LIBRARY: sinatra
+      context: '.'
+      dockerfile: Dockerfile.jruby
+    ports:
+    - "8006:8080"
+    command: puma -p 8080
