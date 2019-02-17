@@ -23,7 +23,7 @@ services:
     - "8014:8004"
     - "8015:8005"
     - "8016:8006"
-    command: exec nginx -g 'daemon off;'
+    command: nginx -g 'daemon off;'
 
   #haproxy:
   #  networks:
