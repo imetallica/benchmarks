@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+export IMAGE_PREFIX='benchmark'
+
+cleanImages() {
+  docker images \
+  | fgrep 'benchmark/' \
+  | awk '{print $3}' \
+  | while read image; do
+    docker rmi ${image}
+  done
+}
+
+buildImage() {
+  PLATFORM="${1}"
+  SERVER="${2}"
+  LIBRARY="${3}"
+
+  if [ -z "${PLATFORM}" ] || [ -z "${SERVER}" ] || [ -z "${LIBRARY}" ]; then
+    echo "Correct usage:\n\tbuildImage [jruby|cruby] [puma|unicorn] [sinatra|grape]"
+  fi
+
+  docker build \
+    --build-arg SERVER=${SERVER} \
+    --build-arg LIBRARY=${LIBRARY} \
+    -t "${IMAGE_PREFIX}/${PLATFORM}-${SERVER}-${LIBRARY}" \
+    -f "Dockerfile.${PLATFORM}" .
+}
