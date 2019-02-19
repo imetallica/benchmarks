@@ -7,6 +7,8 @@ WORKDIR /srv/app
 
 COPY apps/${LIBRARY} /srv/app
 
+RUN apt-get update -yq
+
 RUN apt-get install -yq \
     libc6-dev \
     build-essential
