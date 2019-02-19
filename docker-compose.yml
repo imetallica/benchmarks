@@ -99,32 +99,6 @@ services:
     - "8006:8006"
     command: unicorn -p 8006 --env production
 
-  jruby_jubilee_sinatra:
-    networks:
-    - benchmark
-    build:
-      args:
-        SERVER: jubilee
-        LIBRARY: sinatra
-      context: '.'
-      dockerfile: Dockerfile.jruby-9.0
-    ports:
-    - "8007:8007"
-    command: jubilee -p 8007 --environment production
-
-  jruby_jubilee_grape:
-    networks:
-    - benchmark
-    build:
-      args:
-        SERVER: jubilee
-        LIBRARY: grape
-      context: '.'
-      dockerfile: Dockerfile.jruby-9.0
-    ports:
-    - "8008:8008"
-    command: jubilee -p 8008 --environment production
-
   cruby_falcon_sinatra:
     networks:
     - benchmark
@@ -135,8 +109,8 @@ services:
       context: '.'
       dockerfile: Dockerfile.cruby-2.6
     ports:
-    - "8009:8009"
-    command: falcon -b htp://0.0.0.0:8009
+    - "8007:8007"
+    command: falcon -b htp://0.0.0.0:8007
 
   cruby_falcon_grape:
     networks:
@@ -148,5 +122,5 @@ services:
       context: '.'
       dockerfile: Dockerfile.cruby-2.6
     ports:
-    - "8010:8010"
-    command: falcon -b htp://0.0.0.0:8010
+    - "8008:8008"
+    command: falcon -b htp://0.0.0.0:8008
