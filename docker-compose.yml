@@ -136,7 +136,7 @@ services:
       dockerfile: Dockerfile.cruby
     ports:
     - "8009:8009"
-    command: falcon -p 8009 --environment production
+    command: falcon -p 8009
 
   cruby_falcon_grape:
     networks:
@@ -149,4 +149,4 @@ services:
       dockerfile: Dockerfile.cruby
     ports:
     - "8010:8010"
-    command: falcon -p 8010 --environment production
+    command: falcon -p 8010
