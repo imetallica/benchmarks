@@ -29,7 +29,7 @@ services:
         SERVER: puma
         LIBRARY: sinatra
       context: '.'
-      dockerfile: Dockerfile.cruby
+      dockerfile: Dockerfile.cruby-2.6
     ports:
     - "8001:8001"
     command: puma -p 8001 -e production
@@ -42,7 +42,7 @@ services:
         SERVER: puma
         LIBRARY: grape
       context: '.'
-      dockerfile: Dockerfile.cruby
+      dockerfile: Dockerfile.cruby-2.6
     ports:
     - "8002:8002"
     command: puma -p 8002 -e production
@@ -55,7 +55,7 @@ services:
         SERVER: puma
         LIBRARY: sinatra
       context: '.'
-      dockerfile: Dockerfile.jruby
+      dockerfile: Dockerfile.jruby-9.2
     ports:
     - "8003:8003"
     command: puma -p 8003 -e production
@@ -68,7 +68,7 @@ services:
         SERVER: puma
         LIBRARY: grape
       context: '.'
-      dockerfile: Dockerfile.jruby
+      dockerfile: Dockerfile.jruby-9.2
     ports:
     - "8004:8004"
     command: puma -p 8004 -e production
@@ -81,7 +81,7 @@ services:
         SERVER: unicorn
         LIBRARY: sinatra
       context: '.'
-      dockerfile: Dockerfile.cruby
+      dockerfile: Dockerfile.cruby-2.6
     ports:
     - "8005:8005"
     command: unicorn -p 8005 --env production
@@ -94,7 +94,7 @@ services:
         SERVER: unicorn
         LIBRARY: grape
       context: '.'
-      dockerfile: Dockerfile.cruby
+      dockerfile: Dockerfile.cruby-2.6
     ports:
     - "8006:8006"
     command: unicorn -p 8006 --env production
@@ -107,7 +107,7 @@ services:
         SERVER: jubilee
         LIBRARY: sinatra
       context: '.'
-      dockerfile: Dockerfile.jruby
+      dockerfile: Dockerfile.jruby-9.0
     ports:
     - "8007:8007"
     command: jubilee -p 8007 --environment production
@@ -120,7 +120,7 @@ services:
         SERVER: jubilee
         LIBRARY: grape
       context: '.'
-      dockerfile: Dockerfile.jruby
+      dockerfile: Dockerfile.jruby-9.0
     ports:
     - "8008:8008"
     command: jubilee -p 8008 --environment production
@@ -133,10 +133,10 @@ services:
         SERVER: falcon
         LIBRARY: sinatra
       context: '.'
-      dockerfile: Dockerfile.cruby
+      dockerfile: Dockerfile.cruby-2.6
     ports:
     - "8009:8009"
-    command: falcon -p 8009
+    command: falcon -b htp://0.0.0.0:8009
 
   cruby_falcon_grape:
     networks:
@@ -146,7 +146,7 @@ services:
         SERVER: falcon
         LIBRARY: grape
       context: '.'
-      dockerfile: Dockerfile.cruby
+      dockerfile: Dockerfile.cruby-2.6
     ports:
     - "8010:8010"
-    command: falcon -p 8010
+    command: falcon -b htp://0.0.0.0:8010
