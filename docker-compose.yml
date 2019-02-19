@@ -5,11 +5,6 @@ networks:
 
 services:
 
-  postgres:
-    networks:
-    - benchmark
-    image: postgres:11-alpine
-
   nginx:
     image: nginx:alpine
     volumes:
@@ -26,58 +21,9 @@ services:
     - "8016:8006"
     command: nginx -g 'daemon off;'
 
-  #haproxy:
-  #  networks:
-  #  - benchmark
-  #  ports:
-  #  - "8021:8001"
-  #  - "8022:8002"
-  #  - "8023:8003"
-  #  - "8024:8004"
-  #  - "8025:8005"
-  #  - "8026:8006"
-
-  cruby_unicorn_sinatra:
-    depends_on:
-    - postgres
-    networks:
-    - benchmark
-    environment:
-      DATABASE_URL: postgres://postgres@postgres/postgres
-    build:
-      args:
-        SERVER: unicorn
-        LIBRARY: sinatra
-      context: '.'
-      dockerfile: Dockerfile.cruby
-    ports:
-    - "8001:8080"
-    command: unicorn -p 8080 --env production
-
-  cruby_unicorn_grape:
-    depends_on:
-    - postgres
-    networks:
-    - benchmark
-    environment:
-      DATABASE_URL: postgres://postgres@postgres/postgres
-    build:
-      args:
-        SERVER: unicorn
-        LIBRARY: grape
-      context: '.'
-      dockerfile: Dockerfile.cruby
-    ports:
-    - "8002:8080"
-    command: unicorn -p 8080 --env production
-
   cruby_puma_sinatra:
-    depends_on:
-    - postgres
     networks:
     - benchmark
-    environment:
-      DATABASE_URL: postgres://postgres@postgres/postgres
     build:
       args:
         SERVER: puma
@@ -85,16 +31,12 @@ services:
       context: '.'
       dockerfile: Dockerfile.cruby
     ports:
-    - "8003:8080"
-    command: puma -p 8080 -e production
+    - "8001:8001"
+    command: puma -p 8001 -e production
 
   cruby_puma_grape:
-    depends_on:
-    - postgres
     networks:
     - benchmark
-    environment:
-      DATABASE_URL: postgres://postgres@postgres/postgres
     build:
       args:
         SERVER: puma
@@ -102,33 +44,12 @@ services:
       context: '.'
       dockerfile: Dockerfile.cruby
     ports:
-    - "8004:8080"
-    command: puma -p 8080 -e production
-
-  jruby_puma_grape:
-    depends_on:
-    - postgres
-    networks:
-    - benchmark
-    environment:
-      DATABASE_URL: postgres://postgres@postgres/postgres
-    build:
-      args:
-        SERVER: puma
-        LIBRARY: grape
-      context: '.'
-      dockerfile: Dockerfile.jruby
-    ports:
-    - "8005:8080"
-    command: puma -p 8080 -e production
+    - "8002:8002"
+    command: puma -p 8002 -e production
 
   jruby_puma_sinatra:
-    depends_on:
-    - postgres
     networks:
     - benchmark
-    environment:
-      DATABASE_URL: postgres://postgres@postgres/postgres
     build:
       args:
         SERVER: puma
@@ -136,5 +57,96 @@ services:
       context: '.'
       dockerfile: Dockerfile.jruby
     ports:
-    - "8006:8080"
-    command: puma -p 8080 -e production
+    - "8003:8003"
+    command: puma -p 8003 -e production
+
+  jruby_puma_grape:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: puma
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.jruby
+    ports:
+    - "8004:8004"
+    command: puma -p 8004 -e production
+
+  cruby_unicorn_sinatra:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: unicorn
+        LIBRARY: sinatra
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8005:8005"
+    command: unicorn -p 8005 --env production
+
+  cruby_unicorn_grape:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: unicorn
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8006:8006"
+    command: unicorn -p 8006 --env production
+
+  jruby_jubilee_sinatra:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: jubilee
+        LIBRARY: sinatra
+      context: '.'
+      dockerfile: Dockerfile.jruby
+    ports:
+    - "8007:8007"
+    command: jubilee -p 8007 --environment production
+
+  jruby_jubilee_grape:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: jubilee
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.jruby
+    ports:
+    - "8008:8008"
+    command: jubilee -p 8008 --environment production
+
+  cruby_falcon_sinatra:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: falcon
+        LIBRARY: sinatra
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8009:8009"
+    command: falcon -p 8009 --environment production
+
+  cruby_falcon_grape:
+    networks:
+    - benchmark
+    build:
+      args:
+        SERVER: falcon
+        LIBRARY: grape
+      context: '.'
+      dockerfile: Dockerfile.cruby
+    ports:
+    - "8010:8010"
+    command: falcon -p 8010 --environment production
