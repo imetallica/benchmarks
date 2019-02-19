@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# 
+# Author: Thiago Henrique <thiago@codebrain.technology>
+#
+# This script can be used for configure server to run containers
+
+cleanPreviewsVersions() {
+	apt-get remove -yq \
+		docker \
+		docker-engine \
+		docker.io \
+		containerd \
+		runc 
+}
+
+prepareRepository() {
+	apt-get update -yq &&
+	apt-get install -yq \
+		apt-transport-https \
+		ca-certificates \
+		curl \
+		gnupg-agent \
+		software-properties-common &&
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg |
+	sudo apt-key add - &&
+	add-apt-repository \
+		"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+		$(lsb_release -cs) \
+		stable" &&
+	apt-get update -yq
+}
+
+installDockerCE() {
+	cleanPreviewsVersions
+	prepareRepository
+
+	apt-get install -yq \
+		docker-ce \
+		docker-ce-cli \
+		containerd.io \
+		docker-compose
+}
+
+installDockerCE
