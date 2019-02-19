@@ -5,7 +5,7 @@ ARG LIBRARY
 
 WORKDIR /srv/app
 
-COPY ${LIBRARY} /srv/app
+COPY apps/${LIBRARY} /srv/app
 
 RUN apk -Uuv add \
     gcc \
