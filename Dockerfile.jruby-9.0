@@ -7,10 +7,9 @@ WORKDIR /srv/app
 
 COPY apps/${LIBRARY} /srv/app
 
-RUN apk -Uuv add \
-    gcc \
-    make \
-    libc-dev
+RUN apt-get install -yq \
+    libc6-dev \
+    build-essential
 
 RUN gem install bundle ${SERVER}
 
