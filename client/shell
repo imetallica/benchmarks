@@ -1,9 +1,9 @@
 #!/bin/bash
 
-APPLICATION_PORTS="8101 8102 8103 8104 8105 8106 8107 8108"
+APPLICATION_PORTS="8101 8102 8103 8104 8105 8106 8107 8108 8109"
 
 while read port; do
     echo "----> target port ${port} <----"
 
-    wrk -s ./report.lua -c 400 -d1m --latency --latency http://3.16.139.79:${port}
+    wrk -c 400 -d1m --latency --latency http://3.16.139.79:${port}
 done < <(echo "${APPLICATION_PORTS}" | sed 's/ /\n/g')

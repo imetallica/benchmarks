@@ -19,8 +19,9 @@ services:
     - "8104:8104"
     - "8105:8105"
     - "8106:8106"
-    - "8106:8107"
-    - "8106:8108"
+    - "8107:8107"
+    - "8108:8108"
+    - "8109:8109"
     command: nginx -g 'daemon off;'
 
   cruby_puma_sinatra:
@@ -126,3 +127,18 @@ services:
     ports:
     - "8008:8008"
     command: falcon -b htp://0.0.0.0:8008
+
+  elixir_phoenix:
+    networks:
+    - benchmark
+    environment:
+      PORT: 8009
+    build:
+      args:
+        SERVER: cowboy
+        LIBRARY: phoenix
+      context: '.'
+      dockerfile: Dockerfile.elixir-1.8
+    ports:
+    - "8009:8009"
+    command: iex -S mix phx.server
