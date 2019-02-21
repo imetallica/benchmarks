@@ -12,7 +12,7 @@ defmodule App.Application do
       Plug.Cowboy.child_spec(scheme: :http, plug: App, options: [port: 8010])
     ]
 
-    Logger.info("Starting at http://0.0.0.0:8010")
+    Logger.info("Start server at http://0.0.0.0:8010")
 
     opts = [strategy: :one_for_one, name: App.Supervisor]
     Supervisor.start_link(children, opts)

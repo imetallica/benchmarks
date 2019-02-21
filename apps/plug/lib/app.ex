@@ -5,9 +5,11 @@ defmodule App do
   plug :dispatch
 
   get "/" do
-    conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(200, response())
+    send_resp(conn, 200, response())
+  end
+
+  match _ do
+    send_resp(conn, 404, "oops")
   end
 
   def response do
