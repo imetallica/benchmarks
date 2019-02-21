@@ -22,6 +22,7 @@ services:
     - "8107:8107"
     - "8108:8108"
     - "8109:8109"
+    - "8110:8110"
     command: nginx -g 'daemon off;'
 
   cruby_puma_sinatra:
@@ -142,3 +143,18 @@ services:
     ports:
     - "8009:8009"
     command: iex -S mix phx.server
+
+  elixir_plug:
+    networks:
+    - benchmark
+    environment:
+      PORT: 8010
+    build:
+      args:
+        SERVER: cowboy
+        LIBRARY: plug
+      context: '.'
+      dockerfile: Dockerfile.elixir-1.8
+    ports:
+    - "8010:8010"
+    command: iex -S mix run --halt
