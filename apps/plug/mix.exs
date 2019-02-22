@@ -23,6 +23,7 @@ defmodule App.MixProject do
   defp deps do
     [
       {:jason, "~> 1.1"},
+      {:distillery, "~> 2.0"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
