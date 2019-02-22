@@ -157,4 +157,4 @@ services:
       dockerfile: Dockerfile.elixir-1.8
     ports:
     - "8010:8010"
-    command: iex -S mix run --halt
+    command: bash -c "/srv/app/_build/prod/rel/app/bin/app foreground"

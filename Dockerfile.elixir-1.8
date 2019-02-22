@@ -10,7 +10,9 @@ COPY apps/${LIBRARY} /srv/app
 
 ENV MIX_ENV ${MIX_ENV}
 
+RUN apk add bash
+
 RUN mix local.hex --force
 RUN mix local.rebar --force
 RUN mix deps.get
-RUN mix compile
+RUN mix release
