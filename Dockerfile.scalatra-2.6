@@ -2,11 +2,17 @@ FROM openjdk:8-alpine
 
 ARG LIBRARY
 
+RUN apk -Uuv add wget tar bash
+
+RUN wget -c https://piccolo.link/sbt-1.2.8.tgz
+
+RUN tar xvf sbt-1.2.8.tgz
+
+RUN ln -s sbt-1.2.8/bin/* /usr/bin
+
 WORKDIR /srv/app
 
 COPY apps/${LIBRARY} /srv/app
-
-RUN apk -Uuv add sbt
 
 RUN sbt assembly
 
