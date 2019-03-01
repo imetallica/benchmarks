@@ -1,0 +1,15 @@
+FROM openjdk:8-alpine
+
+ARG LIBRARY
+
+WORKDIR /srv/app
+
+COPY apps/${LIBRARY} /srv/app
+
+RUN apk -Uuv add sbt
+
+RUN sbt assembly
+
+RUN ls -l /srv/app
+
+RUN java -jar target/Scalatra-assembly-0.0.1.jar
